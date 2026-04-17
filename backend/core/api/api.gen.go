@@ -5,6 +5,11 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	openapi_types "github.com/oapi-codegen/runtime/types"
+)
+
+const (
+	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
 // DocsResponse defines model for DocsResponse.
@@ -14,6 +19,32 @@ type DocsResponse = string
 type HealthResponse struct {
 	Status *string `json:"status,omitempty"`
 }
+
+// ProfileResponse defines model for ProfileResponse.
+type ProfileResponse struct {
+	Email    *openapi_types.Email `json:"email,omitempty"`
+	Id       *string              `json:"id,omitempty"`
+	Username *string              `json:"username,omitempty"`
+}
+
+// LoginUserJSONBody defines parameters for LoginUser.
+type LoginUserJSONBody struct {
+	Password *string `json:"password,omitempty"`
+	Username *string `json:"username,omitempty"`
+}
+
+// RegisterUserJSONBody defines parameters for RegisterUser.
+type RegisterUserJSONBody struct {
+	Email    *openapi_types.Email `json:"email,omitempty"`
+	Password *string              `json:"password,omitempty"`
+	Username *string              `json:"username,omitempty"`
+}
+
+// LoginUserJSONRequestBody defines body for LoginUser for application/json ContentType.
+type LoginUserJSONRequestBody LoginUserJSONBody
+
+// RegisterUserJSONRequestBody defines body for RegisterUser for application/json ContentType.
+type RegisterUserJSONRequestBody RegisterUserJSONBody
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
@@ -29,6 +60,15 @@ type ServerInterface interface {
 	// Download the OpenAPI specification file
 	// (GET /api/v1/docs/openapi.yaml)
 	GetOpenApiDocument(c *gin.Context)
+	// Authenticate a user and return a token
+	// (POST /api/v1/login)
+	LoginUser(c *gin.Context)
+	// Get the authenticated user's profile information
+	// (GET /api/v1/my-info)
+	GetMyInfo(c *gin.Context)
+	// Register a new user
+	// (POST /api/v1/register)
+	RegisterUser(c *gin.Context)
 }
 
 // ServerInterfaceWrapper converts contexts to parameters.
@@ -92,6 +132,47 @@ func (siw *ServerInterfaceWrapper) GetOpenApiDocument(c *gin.Context) {
 	siw.Handler.GetOpenApiDocument(c)
 }
 
+// LoginUser operation middleware
+func (siw *ServerInterfaceWrapper) LoginUser(c *gin.Context) {
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.LoginUser(c)
+}
+
+// GetMyInfo operation middleware
+func (siw *ServerInterfaceWrapper) GetMyInfo(c *gin.Context) {
+
+	c.Set(BearerAuthScopes, []string{})
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.GetMyInfo(c)
+}
+
+// RegisterUser operation middleware
+func (siw *ServerInterfaceWrapper) RegisterUser(c *gin.Context) {
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		middleware(c)
+		if c.IsAborted() {
+			return
+		}
+	}
+
+	siw.Handler.RegisterUser(c)
+}
+
 // GinServerOptions provides options for the Gin server.
 type GinServerOptions struct {
 	BaseURL      string
@@ -123,4 +204,7 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 	router.GET(options.BaseURL+"/api/v1/docs", wrapper.GetSwaggerIndex)
 	router.GET(options.BaseURL+"/api/v1/docs/", wrapper.GetSwaggerIndexWithSlash)
 	router.GET(options.BaseURL+"/api/v1/docs/openapi.yaml", wrapper.GetOpenApiDocument)
+	router.POST(options.BaseURL+"/api/v1/login", wrapper.LoginUser)
+	router.GET(options.BaseURL+"/api/v1/my-info", wrapper.GetMyInfo)
+	router.POST(options.BaseURL+"/api/v1/register", wrapper.RegisterUser)
 }
