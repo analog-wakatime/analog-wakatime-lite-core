@@ -44,7 +44,6 @@ func main() {
 	v1 := app.Group("/api/v1")
 	{
 		testrouters(v1)
-
 	}
 
 	app.Use(cors.New(config.CorsConfig()))

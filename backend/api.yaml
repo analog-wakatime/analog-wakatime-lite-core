@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Analog Wakatime Lite Core API
-  version: 1.0.0
+  version: v1.0.0
   description: OpenAPI specification for the currently registered backend routes.
 
 tags:
