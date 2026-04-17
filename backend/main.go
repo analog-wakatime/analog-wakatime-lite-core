@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 
+	"analog-wakatime-lite-core/db"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -20,6 +21,13 @@ func testrouters(app *gin.RouterGroup) {
 }
 
 func main() {
+	err := db.InitRedis()
+	if err != nil {
+		panic("Failed to connect to Redis: " + err.Error())
+	}
+	if err := db.InitDB(config.ConfigGetDatabaseURL()); err != nil {
+		panic("Failed to connect to database: " + err.Error())
+	}
 	gin.DisableConsoleColor()
 	os.MkdirAll("logs", 0755)
 	f, _ := os.OpenFile("logs/main_core.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)

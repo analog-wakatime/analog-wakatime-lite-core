@@ -1,0 +1,16 @@
+services:
+  db-local:
+    image: postgres:15-alpine
+    container_name: resume_postgres_local
+    environment:
+      POSTGRES_USER: resume_dev_user
+      POSTGRES_PASSWORD: resume_password
+      POSTGRES_DB: resume_db
+    ports:
+      - "7732:5432"
+
+  redis-local:
+    image: redis:7-alpine
+    container_name: resume_redis_local
+    ports:
+      - "6380:6379"
