@@ -1,0 +1,1 @@
+module analog-wakatime-lite-core
