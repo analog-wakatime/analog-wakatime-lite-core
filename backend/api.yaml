@@ -235,7 +235,6 @@ components:
           type: string
           example: "Swagger UI HTML content or OpenAPI YAML content"
 
-          
     ProfileResponse:
       type: object
       properties:
