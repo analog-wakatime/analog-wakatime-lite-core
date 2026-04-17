@@ -53,7 +53,8 @@ func main() {
 	v1 := app.Group("/api/v1")
 	{
 		testrouters(v1)
-		v1.POST("/auth/register", auth.Register)
+		v1.POST("/register", auth.Register)
+		v1.POST("/login", auth.Login)
 	}
 
 	app.Use(cors.New(config.CorsConfig()))

@@ -1,12 +1,13 @@
 package auth
 
 import (
-	"analog-wakatime-lite-core/config"
+	"analog-wakatime-lite-core/db"
 	"analog-wakatime-lite-core/models"
-	"github.com/gin-gonic/gin"
-	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type RegisterRequest struct {
@@ -33,7 +34,7 @@ func Register(c *gin.Context) {
 		Username: req.Username,
 		Password: string(hashedPassword),
 	}
-	if err := config.db.Create(&user).Error; err != nil {
+	if err := db.DB.Create(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
 		return
 	}
