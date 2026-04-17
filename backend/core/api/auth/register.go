@@ -33,7 +33,7 @@ func Register(c *gin.Context) {
 		Username: req.Username,
 		Password: string(hashedPassword),
 	}
-	if err := config.DB.Create(&user).Error; err != nil {
+	if err := config.db.Create(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
 		return
 	}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"analog-wakatime-lite-core/config"
+	"analog-wakatime-lite-core/core/api/auth"
 	"fmt"
 	"io"
 	"os"
@@ -52,6 +53,7 @@ func main() {
 	v1 := app.Group("/api/v1")
 	{
 		testrouters(v1)
+		v1.POST("/auth/register", auth.Register)
 	}
 
 	app.Use(cors.New(config.CorsConfig()))
