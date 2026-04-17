@@ -1,5 +1,5 @@
 package config
 
-func ConfigEnv() string {
+func GetAppPort() string {
 	return ":8080"
 }

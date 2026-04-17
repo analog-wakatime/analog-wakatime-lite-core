@@ -2,6 +2,7 @@ package main
 
 import (
 	"analog-wakatime-lite-core/config"
+	"fmt"
 	"io"
 	"os"
 
@@ -47,5 +48,6 @@ func main() {
 
 	app.Use(cors.New(config.CorsConfig()))
 
-	app.Run(config.ConfigEnv())
+	fmt.Println("Starting server on port " + config.GetAppPort())
+	app.Run(config.GetAppPort())
 }
