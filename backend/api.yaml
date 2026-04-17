@@ -1,0 +1,23 @@
+openapi: 3.0.3
+info:
+  title: Analog Wakatime Lite Core API
+  version: 1.0.0
+  description: OpenAPI specification for the currently registered backend routes.
+
+tags:
+  - name: system
+
+paths:
+  /api/v1/:
+    get:
+      tags: [system]
+      operationId: getApiStatus
+      summary: Check API status
+      responses:
+        '200':
+          description: API health response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
