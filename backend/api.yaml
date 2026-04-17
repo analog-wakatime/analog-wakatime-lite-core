@@ -21,3 +21,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/HealthResponse'
 
+
+schema:
+  HealthResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        example: "ok"
