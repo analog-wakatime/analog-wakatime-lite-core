@@ -25,6 +25,7 @@ func main() {
 	f, _ := os.OpenFile("logs/main_core.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	gin.DefaultWriter = io.MultiWriter(f)
 	app := gin.Default()
+
 	v1Docs := app.Group("/api/v1/docs")
 	{
 		v1Docs.GET("", func(c *gin.Context) {

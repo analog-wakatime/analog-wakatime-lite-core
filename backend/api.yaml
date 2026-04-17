@@ -6,6 +6,7 @@ info:
 
 tags:
   - name: system
+  - name: docs
 
 paths:
   /api/v1/:
@@ -20,12 +21,60 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HealthResponse'
+  /api/v1/docs:
+    get:
+      tags: [docs]
+      operationId: getSwaggerIndex
+      summary: Serve Swagger UI entrypoint
+      responses:
+        '200':
+          description: Swagger UI HTML page
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/DocsResponse'
 
+  /api/v1/docs/:
+    get:
+      tags: [docs]
+      operationId: getSwaggerIndexWithSlash
+      summary: Serve Swagger UI entrypoint with trailing slash
+      responses:
+        '200':
+          description: Swagger UI HTML page
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/DocsResponse'
 
-schema:
-  HealthResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        example: "ok"
+  /api/v1/docs/openapi.yaml:
+    get:
+      tags: [docs]
+      operationId: getOpenApiDocument
+      summary: Download the OpenAPI specification file
+      responses:
+        '200':
+          description: OpenAPI YAML document
+          content:
+            application/yaml:
+              schema:
+                $ref: '#/components/schemas/DocsResponse'
+            text/yaml:
+              schema:
+                $ref: '#/components/schemas/DocsResponse'
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "ok"
+
+    DocsResponse:
+      type: string
+      properties: 
+        content:
+          type: string
+          example: "Swagger UI HTML content or OpenAPI YAML content"
