@@ -1,8 +1,10 @@
 package main
 
 import (
+	"analog-wakatime-lite-core/auths"
 	"analog-wakatime-lite-core/config"
 	"analog-wakatime-lite-core/core/api/auth"
+	"analog-wakatime-lite-core/core/api/profiles"
 	"fmt"
 	"io"
 	"os"
@@ -55,6 +57,12 @@ func main() {
 		testrouters(v1)
 		v1.POST("/register", auth.Register)
 		v1.POST("/login", auth.Login)
+	}
+
+	auth := app.Group("/api/v1")
+	auth.Use(auths.JWTAuthMiddleware())
+	{
+		auth.GET("/my-info", profiles.GetMyInfo)
 	}
 
 	app.Use(cors.New(config.CorsConfig()))

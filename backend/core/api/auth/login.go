@@ -4,9 +4,10 @@ import (
 	"analog-wakatime-lite-core/auths"
 	"analog-wakatime-lite-core/db"
 	"analog-wakatime-lite-core/models"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
-	"net/http"
 )
 
 type LoginRequest struct {
@@ -31,7 +32,7 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
 		return
 	}
-	token, expiresAt, err := auths.GenerateToken(user.ID, user.Email)
+	token, expiresAt, err := auths.GenerateToken(uint(user.ID), user.Email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
 		return
