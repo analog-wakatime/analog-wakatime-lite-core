@@ -38,8 +38,9 @@ func Login(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"token":   token,
-		"message": "Login successful",
+		"token":      token,
+		"expires_at": expiresAt,
+		"message":    "Login successful",
 		"user": gin.H{
 			"id":       user.ID,
 			"email":    user.Email,
