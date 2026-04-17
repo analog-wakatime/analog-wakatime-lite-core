@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"analog-wakatime-lite-core/auths"
 	"analog-wakatime-lite-core/db"
 	"analog-wakatime-lite-core/models"
 	"github.com/gin-gonic/gin"
@@ -30,8 +31,14 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
 		return
 	}
+	token, expiresAt, err := auths.GenerateToken(user.ID, user.Email)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{
+		"token":   token,
 		"message": "Login successful",
 		"user": gin.H{
 			"id":       user.ID,
