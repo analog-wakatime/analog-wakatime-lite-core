@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func testrouters(app *gin.Engine) {
+func testrouters(app *gin.RouterGroup) {
 	app.GET("/api/hello", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "API is working"})
 	})
