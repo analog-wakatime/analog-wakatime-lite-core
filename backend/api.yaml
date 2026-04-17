@@ -13,19 +13,19 @@ tags:
 paths:
   /api/v1/:
     get:
-      tags: [system]
+      tags: [ system ]
       operationId: getApiStatus
       summary: Check API status
       responses:
-        '200':
+        "200":
           description: API health response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HealthResponse'
+                $ref: "#/components/schemas/HealthResponse"
   /api/v1/register:
     post:
-      tags: [auth]
+      tags: [ auth ]
       operationId: registerUser
       summary: Register a new user
       requestBody:
@@ -46,7 +46,7 @@ paths:
                   type: string
                   example: "securepassword"
       responses:
-        '200':
+        "200":
           description: User registration successful
           content:
             application/json:
@@ -56,7 +56,7 @@ paths:
                   message:
                     type: string
                     example: "User registered successfully"
-        '400':
+        "400":
           description: Invalid input data
           content:
             application/json:
@@ -66,7 +66,7 @@ paths:
                   error:
                     type: string
                     example: "Username and password are required"
-        '500':
+        "500":
           description: Server error during registration
           content:
             application/json:
@@ -79,7 +79,7 @@ paths:
 
   /api/v1/login:
     post:
-      tags: [auth]
+      tags: [ auth ]
       operationId: loginUser
       summary: Authenticate a user and return a token
       requestBody:
@@ -96,7 +96,7 @@ paths:
                   type: string
                   example: "securepassword"
       responses:
-        '200':
+        "200":
           description: User login successful
           content:
             application/json:
@@ -106,7 +106,7 @@ paths:
                   token:
                     type: string
                     example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-        '400':
+        "400":
           description: Invalid input data
           content:
             application/json:
@@ -116,7 +116,7 @@ paths:
                   error:
                     type: string
                     example: "Username and password are required"
-        '401':
+        "401":
           description: Authentication failed
           content:
             application/json:
@@ -126,7 +126,7 @@ paths:
                   error:
                     type: string
                     example: "Invalid username or password"
-        '500':
+        "500":
           description: Server error during authentication
           content:
             application/json:
@@ -139,19 +139,19 @@ paths:
 
   /api/v1/my-info:
     get:
-      tags: [profile]
+      tags: [ profile ]
       operationId: getMyInfo
       summary: Get the authenticated user's profile information
       security:
         - bearerAuth: []
       responses:
-        '200':
+        "200":
           description: User profile information
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProfileResponse'
-        '401':
+                $ref: "#/components/schemas/ProfileResponse"
+        "401":
           description: Unauthorized access
           content:
             application/json:
@@ -161,7 +161,7 @@ paths:
                   error:
                     type: string
                     example: "Unauthorized"
-        '500':
+        "500":
           description: Server error while fetching profile information
           content:
             application/json:
@@ -173,45 +173,45 @@ paths:
                     example: "Failed to fetch user profile information"
   /api/v1/docs:
     get:
-      tags: [docs]
+      tags: [ docs ]
       operationId: getSwaggerIndex
       summary: Serve Swagger UI entrypoint
       responses:
-        '200':
+        "200":
           description: Swagger UI HTML page
           content:
             text/html:
               schema:
-                $ref: '#/components/schemas/DocsResponse'
+                $ref: "#/components/schemas/DocsResponse"
 
   /api/v1/docs/:
     get:
-      tags: [docs]
+      tags: [ docs ]
       operationId: getSwaggerIndexWithSlash
       summary: Serve Swagger UI entrypoint with trailing slash
       responses:
-        '200':
+        "200":
           description: Swagger UI HTML page
           content:
             text/html:
               schema:
-                $ref: '#/components/schemas/DocsResponse'
+                $ref: "#/components/schemas/DocsResponse"
 
   /api/v1/docs/openapi.yaml:
     get:
-      tags: [docs]
+      tags: [ docs ]
       operationId: getOpenApiDocument
       summary: Download the OpenAPI specification file
       responses:
-        '200':
+        "200":
           description: OpenAPI YAML document
           content:
             application/yaml:
               schema:
-                $ref: '#/components/schemas/DocsResponse'
+                $ref: "#/components/schemas/DocsResponse"
             text/yaml:
               schema:
-                $ref: '#/components/schemas/DocsResponse'
+                $ref: "#/components/schemas/DocsResponse"
 
 components:
   securitySchemes:
@@ -230,7 +230,7 @@ components:
 
     DocsResponse:
       type: string
-      properties: 
+      properties:
         content:
           type: string
           example: "Swagger UI HTML content or OpenAPI YAML content"
