@@ -1,16 +1,35 @@
 services:
+  core:
+    build: .
+    container_name: analog_wakatime_lite_core_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db-local
+      - redis-local
+    networks:
+      - analog_wakatime_lite_core_network
+      
   db-local:
     image: postgres:15-alpine
-    container_name: resume_postgres_local
+    container_name: analog_wakatime_lite_core_postgres_local
     environment:
-      POSTGRES_USER: resume_dev_user
-      POSTGRES_PASSWORD: resume_password
-      POSTGRES_DB: resume_db
+      POSTGRES_USER: analog_waka_time_lite_core_users
+      POSTGRES_PASSWORD: analog_waka_time_lite_core_password
+      POSTGRES_DB: analog_waka_time_lite_core_db
     ports:
       - "7732:5432"
+    networks:
+      - analog_wakatime_lite_core_network
 
   redis-local:
     image: redis:7-alpine
-    container_name: resume_redis_local
+    container_name: analog_wakatime_lite_core_redis_local
     ports:
       - "6380:6379"
+    networks:
+      - analog_wakatime_lite_core_network
+
+networks:
+  default:
+    name: analog_wakatime_lite_core_network

@@ -5,7 +5,7 @@ func GetAppPort() string {
 }
 
 func ConfigGetDatabaseURL() string {
-	DATABASE_URL := "postgres://resume_dev_user:resume_password@localhost:7732/resume_db?sslmode=disable"
+	DATABASE_URL := "postgres://analog_waka_time_lite_core_users:analog_waka_time_lite_core_password@localhost:7732/analog_waka_time_lite_core_db?sslmode=disable"
 	return DATABASE_URL
 }
 
