@@ -1,4 +1,4 @@
-# At the moment, the kernel has such a routes:
+# At the moment, the Core has such a routes:
 
 ```
 	v1Docs := app.Group("/api/v1/docs")
