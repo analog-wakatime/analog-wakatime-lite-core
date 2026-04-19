@@ -8,6 +8,8 @@
 
 ### Development Documentation here: [docs/dev/StartCore.md](docs/dev/StartCore.md)
 
+### Development Documentation in Russian here: [docs/ru/README.md](docs/ru/README.md)
+
 ## Roadmap
 
 Version 1.0.0 is the initial release of the is Analog WakaTime Lite Core. The following features are planned for this version:
